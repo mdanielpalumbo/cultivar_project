@@ -1,0 +1,18 @@
+@import 'CreateUser';
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+.app {
+    height:100vh;
+    width:100vw;
+    position:relative;
+    display:flex;
+    flex-flow:column nowrap;
+    justify-content:center;
+    align-items:center;
+    padding-bottom:20vw;
+}
