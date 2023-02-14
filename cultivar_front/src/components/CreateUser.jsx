@@ -13,19 +13,20 @@ const CreateUser = () => {
   const[email, setEmail] = useState('')
 
   const [match, setMatch] = useState('')
-  const [validMatch, setValidMatch ] = (false)
+  const [validMatch, setValidMatch] = useState(false)
 
 
 
   useEffect(() => {
     setValidUser(USER_REGEX.test(userName))
     console.log(userName)
+    console.log(validUser)
   }, [userName])
 
   useEffect(() => {
     console.log(pwd, match)
     setValidPwd(PWD_REGEX.test(pwd))
-    setValidMatch(pwd === match)
+    setValidMatch(pwd===match)
   },[pwd, match])
 
 
@@ -35,7 +36,9 @@ const CreateUser = () => {
       <form>
         <span className="input">
           <label htmlFor='userName'>Username</label>
-          <input type="text"
+          <input  
+            type="text"
+            autoComplete='off'
             id='userName'
             required
             aria-invalid={validUser ? 'false' : 'true'}
@@ -44,20 +47,36 @@ const CreateUser = () => {
           />
         </span>
         <span className="input">  
-          <label>Email</label>
-          <input type="email" 
+          <label htmlFor='email'>Email</label>
+          <input 
+            type="email" 
+            autoComplete='off'
+            id='email'
+            required
             onChange={(e) => {setEmail(e.target.value)}}
+            value={email}
           />
         </span>
         <span className="input">
-          <label>Password</label>
-          <input type="password" 
+          <label htmlFor='password'>Password</label>
+          <input 
+            type="password"
+            autoComplete='off'
+            required
+            value={pwd}
+            aria-invalid={validPwd ? 'false' : 'true'}
+            id='password'
             onChange={(e) => setPwd(e.target.value)}
           />
         </span>
         <span className="input">
           <label>Confirm password</label>
-          <input type="password" 
+          <input 
+            autoComplete='off'
+            type="password" 
+            required
+            value={match}
+            aria-invalid={validMatch ? 'false' : 'true'}
             onChange={(e) => {setMatch(e.target.value)}}
           />
         </span>

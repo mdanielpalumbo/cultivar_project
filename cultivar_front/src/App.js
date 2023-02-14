@@ -1,10 +1,10 @@
 import React from 'react'
 import CreateUser from './components/CreateUser';
-import './styles/styles.scss'
+import './styles/styles.css'
 
 function App() {
   return (
-   <CreateUser/>
+    <CreateUser ></CreateUser>
   );
 }
 
