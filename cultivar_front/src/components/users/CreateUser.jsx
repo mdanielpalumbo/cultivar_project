@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import axios from '../../config/axios'
 
 const USER_REGEX = /^[a-zA-Z][a-zAZ0-9-_]{3,15}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,24}$/;
@@ -15,25 +16,30 @@ const CreateUser = () => {
   const [match, setMatch] = useState('')
   const [validMatch, setValidMatch] = useState(false)
 
-
-
   useEffect(() => {
     setValidUser(USER_REGEX.test(userName))
-    console.log(userName)
-    console.log(validUser)
   }, [userName])
 
   useEffect(() => {
-    console.log(pwd, match)
     setValidPwd(PWD_REGEX.test(pwd))
     setValidMatch(pwd===match)
   },[pwd, match])
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const u = USER_REGEX.test(userName)
+    const p = PWD_REGEX.test(pwd)
+    console.log(u)
+    if(!u || !p){
+      console.log('le erraste papi')
+    }
+    await axios.post('/users/register', {nickName:userName, password: pwd, email: email})
+  }
 
   return (
-    <div className='app'>
+    <div className='register'>
       <h2>Register</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <span className="input">
           <label htmlFor='userName'>Username</label>
           <input  

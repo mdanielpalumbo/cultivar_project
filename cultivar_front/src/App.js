@@ -1,10 +1,11 @@
 import React from 'react'
-import CreateUser from './components/CreateUser';
+import Login from './components/users/Login'
+import CreateUser from './components/users/CreateUser';
 import './styles/styles.css'
 
 function App() {
   return (
-    <CreateUser ></CreateUser>
+    <Login/>
   );
 }
 
