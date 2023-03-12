@@ -1,6 +1,6 @@
 import React from 'react'
 import Login from './components/users/Login'
-import CreateUser from './components/users/CreateUser';
+import Register from './components/users/Register';
 import './styles/styles.css'
 
 function App() {

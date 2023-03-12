@@ -1,23 +1,17 @@
 const express = require('express');
-const usersCont = require('../containers/usersCont');
+const service = require('../services/users.service');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
+
+
 const users = express.Router();
-const saltRounds = 10;
 
 users.post('/register', async (req,res) => {
     try{
-        const { nickName ,email, password } = req.body
-        bcrypt.hash(password, saltRounds, async(err, hash) => {
-            try{
-                const newUser = {nickName, email, password: hash}
-                await usersCont.createUser(newUser)
-                res.status(204).json('userCreated')
-            }catch(err){
-                res.json(err)
-            }
-        })
+        const user = req.body
+        await service.createUser(user)
+        res.status(204).json('userCreated')
     }catch(err){
         res.json(err)
     }

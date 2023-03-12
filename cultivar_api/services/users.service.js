@@ -10,12 +10,20 @@ const UsersCont = class {
     }
 
     createUser = async (user) => {
-        try{
-            console.log(user)
-            await Users.create(user)
-        }catch(err){
-            console.log(err)
-        }
+        const saltRounds = 10;
+        bcrypt.hash(user.password, saltRounds, async(err, hash) => {
+            try{
+                await Users.create({
+                    ...user,
+                    password:hash
+                })
+                delete user.password
+                return user;
+            }catch(err){
+                console.log(err)
+                return err
+            }
+        })
     }
 
     checkUser = async (user) => {
@@ -28,6 +36,8 @@ const UsersCont = class {
                     nickName: user.nickName
                 }
             })
+
+            console.log(userRes)
             return userRes
         }catch(err){
             console.log(err)
