@@ -1,5 +1,6 @@
 const Users = require('../db/models/Users')
 const bcrypt = require('bcrypt')
+require('dotenv').config()
 
 const UsersCont = class {
     constructor(){
@@ -26,7 +27,7 @@ const UsersCont = class {
         })
     }
 
-    checkUser = async (user) => {
+    userLogin = async (user) => {
         try{
             const userRes = await Users.findOne({
                 attributes: [
@@ -36,11 +37,20 @@ const UsersCont = class {
                     nickName: user.nickName
                 }
             })
-
             console.log(userRes)
-            return userRes
+            bcrypt.compare(user.password, userRes.dataValues.password, (error, result) => {
+                if(result) {
+                    delete user.password
+                    delete userRes.dataValues.password
+                    const token = jwt.sign(user, process.env.SECRET, {expiresIn: '3m'})
+                    return token
+                }
+                else{
+                    console.log('jaja')
+                }
+            })
         }catch(err){
-            console.log(err)
+            console.log('jaja2')
         }
     }
     
