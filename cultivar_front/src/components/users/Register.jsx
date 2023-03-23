@@ -29,11 +29,21 @@ const CreateUser = () => {
     e.preventDefault()
     const u = USER_REGEX.test(userName)
     const p = PWD_REGEX.test(pwd)
-    console.log(u)
     if(!u || !p){
       console.log('le erraste papi')
+    }else{
+      try{
+        const jaja = await axios.post('/users/register', {nickName:userName, password: pwd, email: email})
+        console.log(jaja)
+        setEmail('')
+        setMatch('')
+        setPwd('')
+        setUserName('')
+      }catch(err){
+        console.log(err)
+      }
     }
-    await axios.post('/users/register', {nickName:userName, password: pwd, email: email})
+    
   }
 
   return (

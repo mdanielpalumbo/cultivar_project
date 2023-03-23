@@ -1,5 +1,6 @@
 const Users = require('../db/models/Users')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 const UsersCont = class {
@@ -14,6 +15,7 @@ const UsersCont = class {
         const saltRounds = 10;
         bcrypt.hash(user.password, saltRounds, async(err, hash) => {
             try{
+                console.log('jaja')
                 await Users.create({
                     ...user,
                     password:hash
@@ -29,6 +31,7 @@ const UsersCont = class {
 
     userLogin = async (user) => {
         try{
+            console.log(user)
             const userRes = await Users.findOne({
                 attributes: [
                     'password'
@@ -38,22 +41,17 @@ const UsersCont = class {
                 }
             })
             console.log(userRes)
-            bcrypt.compare(user.password, userRes.dataValues.password, (error, result) => {
-                if(result) {
+            bcrypt.compare(user.password, userRes.dataValues.password, (result) => {
+                console.log(result)
                     delete user.password
                     delete userRes.dataValues.password
-                    const token = jwt.sign(user, process.env.SECRET, {expiresIn: '3m'})
-                    return token
-                }
-                else{
-                    console.log('jaja')
-                }
+                    return jwt.sign(user, process.env.SECRET, {expiresIn: '3m'})
+                
             })
         }catch(err){
-            console.log('jaja2')
+            console.log(err)
         }
     }
-    
 }
 
 module.exports = new UsersCont()
