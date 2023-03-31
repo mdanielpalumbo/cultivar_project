@@ -31,7 +31,6 @@ const UsersCont = class {
 
     userLogin = async (user) => {
         try{
-            console.log(user)
             const userRes = await Users.findOne({
                 attributes: [
                     'password'
@@ -40,14 +39,10 @@ const UsersCont = class {
                     nickName: user.nickName
                 }
             })
-            console.log(userRes)
-            bcrypt.compare(user.password, userRes.dataValues.password, (result) => {
-                console.log(result)
-                    delete user.password
-                    delete userRes.dataValues.password
-                    return jwt.sign(user, process.env.SECRET, {expiresIn: '3m'})
-                
-            })
+            let jaja = await bcrypt.compare(user.password, userRes.dataValues.password)  
+            delete userRes.dataValues.password
+            delete user.password
+            return jwt.sign({data: user}, process.env.SECRET, {expiresIn:'15m'})
         }catch(err){
             console.log(err)
         }

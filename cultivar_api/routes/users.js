@@ -22,7 +22,6 @@ users.post('/login', async(req,res) => {
     try{
         const user = req.body
         const token = await service.userLogin(user)
-        console.log(token)
         res.status(200).json(token)
     }catch(err){
         console.log('erraste')

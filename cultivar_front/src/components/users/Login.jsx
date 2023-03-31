@@ -9,7 +9,6 @@ const Login = () => {
         e.preventDefault()
         try{
             const token = await axios.post('/users/login', {nickName: userName, password: pwd})
-            console.log(token.data)
         }catch(error){
             console.log(error)
         }    
