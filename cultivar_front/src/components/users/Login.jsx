@@ -4,11 +4,16 @@ import React, {useEffect, useState} from 'react'
 const Login = () => {
     const [userName, setUserName] = useState('')
     const [pwd, setPwd] = useState('')
+    const [user, setUser] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try{
             const token = await axios.post('/users/login', {nickName: userName, password: pwd})
+            setUserName('')
+            setPwd('')
+            localStorage.setItem('user', token.data.token)
+            setUser(localStorage.getItem('user'))
         }catch(error){
             console.log(error)
         }    

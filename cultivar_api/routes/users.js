@@ -22,9 +22,9 @@ users.post('/login', async(req,res) => {
     try{
         const user = req.body
         const token = await service.userLogin(user)
-        res.status(200).json(token)
+        res.status(200).json({token})
     }catch(err){
-        console.log('erraste')
+        console.log(err)
         res.status(403).json(err)
     }
 })

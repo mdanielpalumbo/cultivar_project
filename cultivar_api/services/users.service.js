@@ -39,10 +39,14 @@ const UsersCont = class {
                     nickName: user.nickName
                 }
             })
-            let jaja = await bcrypt.compare(user.password, userRes.dataValues.password)  
-            delete userRes.dataValues.password
-            delete user.password
-            return jwt.sign({data: user}, process.env.SECRET, {expiresIn:'15m'})
+            let verify = await bcrypt.compare(user.password, userRes.dataValues.password)
+            if(verify){
+                delete userRes.dataValues.password
+                delete user.password
+                return jwt.sign({data: user}, process.env.SECRET, {expiresIn:'15m'})
+            }
+
+            
         }catch(err){
             console.log(err)
         }
