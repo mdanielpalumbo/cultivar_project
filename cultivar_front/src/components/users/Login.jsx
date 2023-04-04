@@ -12,8 +12,7 @@ const Login = () => {
             const token = await axios.post('/users/login', {nickName: userName, password: pwd})
             setUserName('')
             setPwd('')
-            localStorage.setItem('user', token.data.token)
-            setUser(localStorage.getItem('user'))
+            console.log(document.cookie)
         }catch(error){
             console.log(error)
         }    

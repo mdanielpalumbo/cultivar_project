@@ -22,7 +22,7 @@ users.post('/login', async(req,res) => {
     try{
         const user = req.body
         const token = await service.userLogin(user)
-        res.status(200).json({token})
+        res.cookie('token', token).send('cookie properly set')
     }catch(err){
         console.log(err)
         res.status(403).json(err)
