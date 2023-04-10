@@ -15,7 +15,6 @@ const UsersCont = class {
         const saltRounds = 10;
         bcrypt.hash(user.password, saltRounds, async(err, hash) => {
             try{
-                console.log('jaja')
                 await Users.create({
                     ...user,
                     password:hash
@@ -43,10 +42,8 @@ const UsersCont = class {
             if(verify){
                 delete userRes.dataValues.password
                 delete user.password
-                return jwt.sign({data: user}, process.env.SECRET, {expiresIn:'15m'})
-            }
-
-            
+                return jwt.sign({data: user}, process.env.SECRET, {expiresIn:'10m'})
+            } 
         }catch(err){
             console.log(err)
         }
